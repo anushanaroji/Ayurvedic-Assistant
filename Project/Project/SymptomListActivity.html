@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .item {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #e0e0e0;
+            cursor: pointer;
+        }
+
+        .item:hover {
+            background-color: #d0d0d0;
+        }
+
+        /* Style for back button */
+        .back-button {
+            display: block;
+            width: 100px;
+            margin: 20px auto;
+            text-align: center;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Symptom Checker</h2>
+        <div class="item" data-title="Appendicitis">Appendicitis</div>
+        <div class="item" data-title="Asthma">Asthma</div>
+        <div class="item" data-title="Bronchitis">Bronchitis</div>
+        <div class="item" data-title="Diabetes">Diabetes</div>
+        <div class="item" data-title="Dysentery">Dysentery</div>
+        <div class="item" data-title="Heart Disease">Heart Disease</div>
+        <div class="item" data-title="High Blood Pressure">High Blood Pressure</div>
+        <div class="item" data-title="Jaundice">Jaundice</div>
+        <div class="item" data-title="Malaria">Malaria</div>
+        <div class="item" data-title="Mumps">Mumps</div>
+        
+        <!-- Back button -->
+        <a href="#" class="back-button" onclick="goBack()">Back</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.item');
+            items.forEach(item => {
+                item.addEventListener('click', function() {
+                    const title = this.getAttribute('data-title');
+                    navigateToDetails(title);
+                });
+            });
+        });
+
+        function navigateToDetails(title) {
+            let symptom = "";
+            let treatment = "";
+            let dose = "";
+            let suggestion = "";
+
+            switch (title) {
+                case "Appendicitis":
+                    symptom = ">> Sudden pain in the centre of abdomen.\n\n" +
+                              ">> Patient has a mild fever vary on 100-102 degree.\n\n" +
+                              ">> Patient vomit several times.";
+                    treatment = "Shulrajlouha";
+                    dose = "1 tab or 2 tabs. Two times daily & socked water of Triphala.";
+                    suggestion = "Rest is of utmost importance in this disease. The patient should resort to fasting which is the only cure for this disease. Hot compresses may be placed over the painful area several times daily. An abdominal message is also beneficial.";
+                    break;
+                case "Asthma":
+                    symptom = ">> It appears to be gasping for breath.\n\n" +
+                              ">> There may be coughing.\n\n" +
+                              ">> Tightness in the chest.\n\n" +
+                              ">> Profuse & sweating & vomiting.";
+                    treatment = "Kanakasab";
+                    dose = "12 ml (4 tsp) twice daily";
+                    suggestion = "The patient should be made to perspire through steam bath, hot foot bath. Asthmatic should always eat slowly, chewing their food properly. Honey is considered highly beneficial in the treatment of asthma. The patient should avoid dust, exposure to cold, food to which is sensitive, mental worries & tension.";
+                    break;
+                case "Bronchitis":
+                    symptom = ">> The larynx, trachea and bronchial tubes are acutely inflamed.\n\n" +
+                              ">> There is highly fever, some difficulty in breathing and deep.\n\n" +
+                              ">> Chest cough.";
+                    treatment = "Basakarista";
+                    dose = "12 ml (4 tsp) twice daily";
+                    suggestion = "One of the most effective remedies for bronchitis is the use of turmeric powder. A teaspoonful of this powder should be administered with a glass of milk two or three times daily. Another effective remedy for this disease is a mixture of dried ginger powder, pepper taken in equal quantities three times daily.";
+                    break;
+                case "Diabetes":
+                    symptom = ">> Copious urination and glucose in the urine.\n\n" +
+                              ">> Patient feels thirsty, and put on weight. He feels drowsy, weakness.";
+                    treatment = "Jambadyaristy";
+                    dose = "12 ml (4 tsp) twice daily";
+                    suggestion = "Diet plays a vital role in such treatment. The patient should avoid overeating & take four or five meals a day. The bitter gourd is highly beneficial in the treatment. The patient should avoid tea, coffee. Exercise is most important in the treatment in diabetes. Hydrotherapy & colonic irrigation form a very important.";
+                    break;
+                case "Dysentery":
+                    symptom = ">> Stool remains putrid & may contain blood.\n\n" +
+                              ">> Diarrhoea and constipation may alternate.\n\n" +
+                              ">> The temperature may rise to 104-105.";
+                    treatment = "Brihatkutajabaleha";
+                    dose = "6 to 12g two times daily or according to physician";
+                    suggestion = "Flesh foods of all kind should be avoided. Tea, coffee, white sugar are avoided. The use of small pieces of onion mixed with curd & equal parts of tender leaves of the peepal tree, coriander leaves & sugar chewed slowly.";
+                    break;
+                case "Heart Disease":
+                    symptom = ">> Shortness of breath\n\n" +
+                              ">> Chest pain or pain down either arm. Palpitation, fainting, emotional instability.";
+                    treatment = "Arjunarista";
+                    dose = "12ml (4 tsp) twice daily";
+                    suggestion = "Fruits & vegetables in general are highly beneficial. Best food sources are unrefined, raw, crude vegetable oils, seeds, grain. One teaspoon raw onion juice first thing in the morning will be highly beneficial.";
+                    break;
+                case "High Blood Pressure":
+                    symptom = ">> Pain toward the back of the head & neck.\n\n" +
+                              ">> Dizziness, aches & pain in the arm & shoulder, leg back.";
+                    treatment = "Mrityunjoy";
+                    dose = "12ml (4 tsp) twice daily";
+                    suggestion = "Person with high blood pressure should always follow a well balanced diet, exercise & rest. Vegetables are good for the patient. Exercise plays an important role in curing hypertension.";
+                    break;
+                case "Jaundice":
+                    symptom = ">> Extreme weakness, headache, fever, loss of appetite, undue fatigue, severe constipation, nausea.\n\n" +
+                              ">> Yellow coloration of the eyes, tongue, skin and urine.";
+                    treatment = "Partrangasav";
+                    dose = "12ml (4 tsp) twice daily";
+                    suggestion = "All fats must be avoided for two weeks. Drinking with lots of water with lemon juice will protect the damaged liver cells. The juice of bitter is regarded as an effective remedy for jaundice.";
+                    break;
+                case "Malaria":
+                    symptom = ">> High fever, which may come every day\n\n" +
+                              ">> The fever is accompanied by chills, headache, shivering and pains in limbs.";
+                    treatment = "Amritarista";
+                    dose = "12 ml (4 tsp) twice daily";
+                    suggestion = "The patient should avoid tea, coffee, fried food, sauces, white sugar, Avoid all alcoholic drinks. Lime & lemon are beneficial in the treatment of malarial fever. The best way to protect against it is to adopt all measures necessary to prevent mosquito bites. The leaves of the holy basil are considered beneficial in the prevention of malaria.";
+                    break;
+                case "Mumps":
+                    symptom = ">> Swelling pain. The pain is first felt under one ear with stiffness of the neck & jaw.\n\n" +
+                              ">> There is fever.\n" +
+                              ">> Vomiting problem occurs.";
+                    treatment = "Baharernani";
+                    dose = "2 tsp two times daily with milk & sugar";
+                    suggestion = "The patient should be put in bed for several days until the temperature returns to normal. The leaves of the peepal tree are another effective home remedy.";
+                    break;
+                default:
+                    break;
+            }
+
+            if (title) {
+                const queryString = `?title=${encodeURIComponent(title)}&symptom=${encodeURIComponent(symptom)}&treatment=${encodeURIComponent(treatment)}&dose=${encodeURIComponent(dose)}&suggestion=${encodeURIComponent(suggestion)}`;
+                window.location.href = 'SymptomDetailsActivity.html' + queryString;
+            }
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

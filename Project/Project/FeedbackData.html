@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .feedback-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .name {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .details {
+            margin-top: 5px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Feedback Data</h2>
+        <div id="feedbackList">
+            <!-- Feedback data will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Mock data (replace with actual data from your Java class)
+            const feedbackData = [
+                {
+                    name: "John Doe",
+                    details: "Great app! Very informative."
+                },
+                {
+                    name: "Jane Smith",
+                    details: "Could use some improvements in navigation."
+                },
+                {
+                    name: "Sam Green",
+                    details: "Loved the new update. Keep it up!"
+                }
+                // Add more feedback data as needed
+            ];
+
+            // Function to display feedback data
+            function displayFeedbackData() {
+                const feedbackListContainer = document.getElementById("feedbackList");
+
+                feedbackData.forEach(feedback => {
+                    const feedbackItem = document.createElement("div");
+                    feedbackItem.classList.add("feedback-item");
+
+                    const nameElement = document.createElement("div");
+                    nameElement.classList.add("name");
+                    nameElement.textContent = "Name: " + feedback.name;
+                    feedbackItem.appendChild(nameElement);
+
+                    const detailsElement = document.createElement("div");
+                    detailsElement.classList.add("details");
+                    detailsElement.textContent = "Details: " + feedback.details;
+                    feedbackItem.appendChild(detailsElement);
+
+                    feedbackListContainer.appendChild(feedbackItem);
+                });
+            }
+
+            // Call function to display initial data
+            displayFeedbackData();
+        });
+    </script>
+</body>
+</html>

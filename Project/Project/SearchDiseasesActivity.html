@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search by Diseases</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        li:hover {
+            background-color: #e0e0e0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .disease-name {
+            font-weight: bold;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .plant-positions {
+            margin-top: 5px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            li {
+                padding: 12px;
+            }
+
+            .disease-name {
+                font-size: 18px;
+            }
+
+            .plant-positions {
+                font-size: 14px;
+            }
+
+            .back-button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search by Diseases</h1>
+        <ul id="diseaseList"></ul>
+        <a class="back-button" id="btnBack">Back</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Array of disease data with plant positions
+            const diseaseSearchData = [
+                { diseaseName: "Acute Fever", plantPositions: [14] },
+                { diseaseName: "Bronchatices", plantPositions: [14] },
+                { diseaseName: "Asthma", plantPositions: [14] },
+                { diseaseName: "Kidney Stone", plantPositions: [14] },
+                { diseaseName: "Children Aliment", plantPositions: [14] },
+                { diseaseName: "Skin Disease", plantPositions: [14, 1] },
+                { diseaseName: "Reumatic arthritis", plantPositions: [8] },
+                { diseaseName: "Dysmenorrhoea", plantPositions: [8] },
+                { diseaseName: "Diabeties", plantPositions: [1, 2, 13] },
+                { diseaseName: "Persistent fever", plantPositions: [2] },
+                { diseaseName: "Heart disorder", plantPositions: [7, 12, 3] },
+                { diseaseName: "Eczema", plantPositions: [0] },
+                { diseaseName: "Jaundice", plantPositions: [0] },
+                { diseaseName: "Gastric trouble", plantPositions: [11, 13] },
+                { diseaseName: "Cholestrelol control", plantPositions: [13] },
+                { diseaseName: "Constipation", plantPositions: [13] },
+                { diseaseName: "Tuberculosis", plantPositions: [13] },
+                { diseaseName: "Gangrene", plantPositions: [3] },
+                { diseaseName: "Fungal infection", plantPositions: [3] }
+            ];
+
+            // Array of plant names corresponding to positions
+            const plantNames = [
+                "Neem", "Tulsi", "Aloe Vera", "Ginger", "Turmeric",
+                "Ashwagandha", "Brahmi", "Guggulu", "Shatavari",
+                "Guduchi", "Manjistha", "Amalaki", "Haritaki",
+                "Bibhitaki", "Triphala"
+            ];
+
+            // Get the disease list element
+            const diseaseListElement = document.getElementById('diseaseList');
+
+            // Populate the disease list
+            diseaseSearchData.forEach(function(disease) {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <div class="disease-name">${disease.diseaseName}</div>
+                    <div class="plant-positions">Plants positions: ${disease.plantPositions.join(', ')}</div>
+                `;
+
+                // Add click event listener to each disease item
+                listItem.addEventListener('click', function() {
+                    const suggestedPlants = disease.plantPositions.map(position => plantNames[position]);
+                    const diseaseDetails = {
+                        diseaseName: disease.diseaseName,
+                        suggestedPlants: suggestedPlants
+                    };
+
+                    // Store disease details in session storage
+                    sessionStorage.setItem('diseaseDetails', JSON.stringify(diseaseDetails));
+
+                    // Redirect to DiseaseAdapter.html
+                    window.location.href = 'DiseaseAdapter.html';
+                });
+
+                // Append the list item to the disease list element
+                diseaseListElement.appendChild(listItem);
+            });
+
+            // Add back button functionality
+            const btnBack = document.getElementById('btnBack');
+            btnBack.addEventListener('click', function() {
+                window.history.back();
+            });
+        });
+    </script>
+</body>
+</html>

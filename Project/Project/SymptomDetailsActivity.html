@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .label {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .content {
+            margin-bottom: 20px;
+        }
+
+        /* Style for back button */
+        .back-button {
+            display: block;
+            width: 100px;
+            margin: 20px auto;
+            text-align: center;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 id="pageTitle"></h2>
+        <div class="label" id="symptomLabel">Symptom:</div>
+        <div class="content" id="txtSymptom"></div>
+        <div class="label" id="treatmentLabel">Treatment:</div>
+        <div class="content" id="txtTreatment"></div>
+        <div class="label" id="doseLabel">Dose:</div>
+        <div class="content" id="txtDose"></div>
+        <div class="label" id="suggestionLabel">Suggestion:</div>
+        <div class="content" id="txtSuggestion"></div>
+
+        <!-- Back button -->
+        <a href="#" class="back-button" onclick="goBack()">Back</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initData();
+            setContentData();
+        });
+
+        let title = "";
+        let symptom = "";
+        let treatment = "";
+        let dose = "";
+        let suggestion = "";
+
+        function initData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            title = urlParams.get('title');
+            symptom = urlParams.get('symptom');
+            treatment = urlParams.get('treatment');
+            dose = urlParams.get('dose');
+            suggestion = urlParams.get('suggestion');
+
+            const pageTitle = document.getElementById('pageTitle');
+            pageTitle.textContent = title;
+        }
+
+        function setContentData() {
+            document.getElementById('txtSymptom').textContent = symptom;
+            document.getElementById('txtTreatment').textContent = treatment;
+            document.getElementById('txtDose').textContent = dose;
+            document.getElementById('txtSuggestion').textContent = suggestion;
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

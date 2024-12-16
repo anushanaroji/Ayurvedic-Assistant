@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .details {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .plant {
+            margin-bottom: 20px;
+        }
+
+        .plant img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Disease Details</h1>
+        <div class="details" id="diseaseDetails"></div>
+        <a class="back-button" id="btnBack">Back</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const plantDetails = [
+                { name: "Neem", details: "Neem is known for its antibacterial, antifungal, and antiviral properties. It is often used to treat skin diseases and infections.", image: "images/neem.jpg" },
+                { name: "Tulsi", details: "Tulsi, also known as Holy Basil, has numerous health benefits including stress relief, boosting immunity, and managing respiratory disorders.", image: "images/tulasi.jpg" },
+                { name: "Aloe Vera", details: "Aloe Vera is well known for its soothing and healing properties, especially for skin conditions and digestive issues.", image: "images/aloe_vera.jpg" },
+                { name: "Ginger", details: "Ginger is commonly used to treat digestive problems, reduce nausea, and fight inflammation.", image: "images/ginger.jpeg" },
+                { name: "Turmeric", details: "Turmeric has powerful anti-inflammatory and antioxidant properties. It is used to manage arthritis and other inflammatory conditions.", image: "images/turmeric.jpg" },
+                { name: "Ashwagandha", details: "Ashwagandha is an adaptogen that helps reduce stress, improve energy levels, and enhance cognitive function.", image: "images/ashwagandha.jpg" },
+                { name: "Brahmi", details: "Brahmi is known for its memory-enhancing properties and is used to reduce anxiety and improve mental clarity.", image: "images/brahmi.jpg" },
+                { name: "Guggulu", details: "Guggulu is used in Ayurvedic medicine to treat arthritis, lower cholesterol, and support weight loss.", image: "images/guggulu.jpg" },
+                { name: "Shatavari", details: "Shatavari is known for its rejuvenating and hormone-balancing properties, particularly for women’s health.", image: "images/shatavari.jpeg" },
+                { name: "Guduchi", details: "Guduchi has immune-boosting and detoxifying properties and is used to manage chronic fevers and liver disorders.", image: "images/guduchi.jpg" },
+                { name: "Manjistha", details: "Manjistha is used to purify the blood and support healthy skin. It also helps in treating skin disorders.", image: "images/manjistha.jpg" },
+                { name: "Amalaki", details: "Amalaki, or Indian Gooseberry, is rich in vitamin C and antioxidants. It supports immune function and digestive health.", image: "images/amalaki.jpeg" },
+                { name: "Haritaki", details: "Haritaki is used to promote digestion, detoxify the body, and improve respiratory health.", image: "images/haritaki.jpeg" },
+                { name: "Bibhitaki", details: "Bibhitaki is known for its benefits in treating respiratory and digestive issues and is also used to detoxify the body.", image: "images/bibhitaki.jpeg" },
+                { name: "Triphala", details: "Triphala is a combination of three fruits (Amalaki, Haritaki, and Bibhitaki) and is used as a general health tonic and digestive aid.", image: "images/triphala.jpeg" }
+            ];
+
+            const diseaseDetailsElement = document.getElementById('diseaseDetails');
+            const diseaseDetails = JSON.parse(sessionStorage.getItem('diseaseDetails'));
+
+            if (diseaseDetails) {
+                const plantInfo = diseaseDetails.suggestedPlants.map(plantName => {
+                    const plant = plantDetails.find(p => p.name === plantName);
+                    return plant ? `
+                        <div class="plant">
+                            <img src="${plant.image}" alt="${plant.name}">
+                            <p><strong>${plant.name}:</strong> ${plant.details}</p>
+                        </div>
+                    ` : `<p>${plantName}</p>`;
+                }).join('');
+
+                diseaseDetailsElement.innerHTML = `
+                    <p><strong>Disease Name:</strong> ${diseaseDetails.diseaseName}</p>
+                    <p><strong>Suggested Plants:</strong></p>
+                    ${plantInfo}
+                `;
+            } else {
+                diseaseDetailsElement.innerHTML = '<p>No disease details found.</p>';
+            }
+
+            // Add back button functionality
+            const btnBack = document.getElementById('btnBack');
+            btnBack.addEventListener('click', function() {
+                window.history.back();
+            });
+        });
+    </script>
+</body>
+</html>

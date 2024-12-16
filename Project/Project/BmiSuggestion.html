@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Suggestions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .suggestion {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .suggestion-title {
+            font-weight: bold;
+        }
+
+        .suggestion-details {
+            margin-top: 5px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>BMI Suggestions</h2>
+        <div class="suggestion" id="shouldDo">
+            <!-- Suggestion for what to do will be dynamically added here -->
+        </div>
+        <div class="suggestion" id="shouldNotDo">
+            <!-- Suggestion for what not to do will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Mock data (replace with actual data from your Java class)
+            const bmiSuggestions = {
+                shouldDo: "Eat a balanced diet rich in fruits and vegetables.",
+                shouldNotDo: "Avoid processed foods and sugary drinks."
+                // Add more suggestions as needed
+            };
+
+            // Function to display BMI suggestions
+            function displayBmiSuggestions() {
+                const shouldDoContainer = document.getElementById("shouldDo");
+                const shouldNotDoContainer = document.getElementById("shouldNotDo");
+
+                const shouldDoTitle = document.createElement("div");
+                shouldDoTitle.classList.add("suggestion-title");
+                shouldDoTitle.textContent = "What You Should Do:";
+                shouldDoContainer.appendChild(shouldDoTitle);
+
+                const shouldDoDetails = document.createElement("div");
+                shouldDoDetails.classList.add("suggestion-details");
+                shouldDoDetails.textContent = bmiSuggestions.shouldDo;
+                shouldDoContainer.appendChild(shouldDoDetails);
+
+                const shouldNotDoTitle = document.createElement("div");
+                shouldNotDoTitle.classList.add("suggestion-title");
+                shouldNotDoTitle.textContent = "What You Should Not Do:";
+                shouldNotDoContainer.appendChild(shouldNotDoTitle);
+
+                const shouldNotDoDetails = document.createElement("div");
+                shouldNotDoDetails.classList.add("suggestion-details");
+                shouldNotDoDetails.textContent = bmiSuggestions.shouldNotDo;
+                shouldNotDoContainer.appendChild(shouldNotDoDetails);
+            }
+
+            // Call function to display initial data
+            displayBmiSuggestions();
+        });
+    </script>
+</body>
+</html>

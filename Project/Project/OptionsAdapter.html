@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Options List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .option-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .option-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+        .option-item h5, .option-item p {
+            margin: 0;
+        }
+        .option-item p {
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="optionList" class="list-group"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const options = [
+                { name: "Symptom List", details: "Check various symptoms", imageId: "https://via.placeholder.com/50" },
+                { name: "Diagnosis", details: "Get a diagnosis", imageId: "https://via.placeholder.com/50" },
+                { name: "Prescription Request", details: "Request a prescription", imageId: "https://via.placeholder.com/50" },
+                { name: "Herbal Plant Options", details: "Explore herbal plants", imageId: "https://via.placeholder.com/50" },
+                { name: "BMI Calculator", details: "Calculate your BMI", imageId: "https://via.placeholder.com/50" },
+                { name: "Maps", details: "Find locations", imageId: "https://via.placeholder.com/50" },
+                { name: "Feedback", details: "Give your feedback", imageId: "https://via.placeholder.com/50" },
+                { name: "About App", details: "Learn about the app", imageId: "https://via.placeholder.com/50" },
+                { name: "About Developer", details: "Learn about the developer", imageId: "https://via.placeholder.com/50" }
+            ];
+
+            function renderOptionList() {
+                options.forEach((option, index) => {
+                    const optionItem = `
+                        <div class="option-item" onclick="navigateTo(${index})">
+                            <img src="${option.imageId}" alt="${option.name}">
+                            <div>
+                                <h5>${option.name}</h5>
+                                <p>${option.details}</p>
+                            </div>
+                        </div>
+                    `;
+                    $('#optionList').append(optionItem);
+                });
+            }
+
+            window.navigateTo = function(pos) {
+                const option = options[pos];
+                if(pos === 0) {
+                    alert(`Navigating to: ${option.name}`);
+                } else if(pos === 1) {
+                    alert(`Navigating to: ${option.name}`);
+                } else if(pos === 2) {
+                    alert(`Navigating to: ${option.name}`);
+                } else if(pos === 3) {
+                    alert(`Navigating to: ${option.name}`);
+                } else if(pos === 4) {
+                    alert(`Navigating to: ${option.name}`);
+                } else if(pos === 5) {
+                    alert(`Navigating to: ${option.name}`);
+                } else if(pos === 6) {
+                    alert(`Navigating to: ${option.name}`);
+                } else if(pos === 7) {
+                    alert(`Navigating to: ${option.name}`);
+                } else if(pos === 8) {
+                    alert(`Navigating to: ${option.name}`);
+                }
+            };
+
+            renderOptionList();
+        });
+    </script>
+</body>
+</html>

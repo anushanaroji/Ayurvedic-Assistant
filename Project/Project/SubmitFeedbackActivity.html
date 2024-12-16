@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Feedback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: #ff0000;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Submit Feedback</h2>
+        <div class="form-group">
+            <label for="username">Your Name:</label>
+            <input type="text" id="username" placeholder="Enter your name">
+            <span id="username-error" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label for="feedback">Your Feedback:</label>
+            <textarea id="feedback" rows="5" placeholder="Enter your feedback"></textarea>
+            <span id="feedback-error" class="error"></span>
+        </div>
+        <button id="btnSubmit">Submit</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('btnSubmit').addEventListener('click', function() {
+                submitFeedback();
+            });
+        });
+
+        function submitFeedback() {
+            var username = document.getElementById('username').value.trim();
+            var feedback = document.getElementById('feedback').value.trim();
+            var isValid = true;
+
+            if (username === '') {
+                document.getElementById('username-error').textContent = 'User name is required';
+                isValid = false;
+            } else {
+                document.getElementById('username-error').textContent = '';
+            }
+
+            if (feedback === '') {
+                document.getElementById('feedback-error').textContent = 'Feedback is required';
+                isValid = false;
+            } else {
+                document.getElementById('feedback-error').textContent = '';
+            }
+
+            if (isValid) {
+                // Simulate API request (replace with actual AJAX call)
+                showLoading();
+                setTimeout(function() {
+                    hideLoading();
+                    var success = true; // Replace with actual response handling logic
+                    if (success) {
+                        resetForm();
+                        alert('Feedback submitted successfully');
+                    } else {
+                        alert('Failed to submit feedback');
+                    }
+                }, 2000); // Simulated delay (2 seconds)
+            }
+        }
+
+        function showLoading() {
+            var loading = document.createElement('div');
+            loading.id = 'loading';
+            loading.textContent = 'Please wait...';
+            document.body.appendChild(loading);
+        }
+
+        function hideLoading() {
+            var loading = document.getElementById('loading');
+            if (loading) {
+                document.body.removeChild(loading);
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('username').value = '';
+            document.getElementById('feedback').value = '';
+            document.getElementById('username-error').textContent = '';
+            document.getElementById('feedback-error').textContent = '';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .disease-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .disease-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .disease-name {
+            font-weight: bold;
+        }
+
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prescription Request</h1>
+        <div class="disease-item" id="appendicitis">
+            <span class="disease-name">Appendicitis</span>
+        </div>
+        <div class="disease-item" id="asthma">
+            <span class="disease-name">Asthma</span>
+        </div>
+        <div class="disease-item" id="bronchitis">
+            <span class="disease-name">Bronchitis</span>
+        </div>
+        <div class="disease-item" id="diabetes">
+            <span class="disease-name">Diabetes</span>
+        </div>
+        <div class="disease-item" id="dysentery">
+            <span class="disease-name">Dysentery</span>
+        </div>
+        <div class="disease-item" id="heartDisease">
+            <span class="disease-name">Heart Disease</span>
+        </div>
+        <div class="disease-item" id="bloodPressure">
+            <span class="disease-name">High Blood Pressure</span>
+        </div>
+        <div class="disease-item" id="jaundice">
+            <span class="disease-name">Jaundice</span>
+        </div>
+        <div class="disease-item" id="malaria">
+            <span class="disease-name">Malaria</span>
+        </div>
+        <div class="disease-item" id="mumps">
+            <span class="disease-name">Mumps</span>
+        </div>
+        <button class="back-button" onclick="goBack()">Back</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const diseases = ['Appendicitis', 'Asthma', 'Bronchitis', 'Diabetes', 'Dysentery', 'Heart Disease', 'High Blood Pressure', 'Jaundice', 'Malaria', 'Mumps'];
+
+            diseases.forEach(disease => {
+                const element = document.getElementById(disease.toLowerCase());
+                if (element) {
+                    element.addEventListener('click', function() {
+                        requestPrescription(disease);
+                    });
+                }
+            });
+
+            function requestPrescription(disease) {
+                const emailLink = `mailto:bhagyashreebhairagond@gmail.com?subject=Prescription Request for ${encodeURIComponent(disease)}&body=Please provide prescription details for ${encodeURIComponent(disease)}. Thank you.`;
+
+                window.location.href = emailLink;
+            }
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

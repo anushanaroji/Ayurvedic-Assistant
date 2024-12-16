@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herbal Plants Data Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .plant-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .plant-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .plant-name {
+            font-weight: bold;
+        }
+
+        .plant-details {
+            margin-top: 5px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Herbal Plants Data</h2>
+        <ul class="plant-list" id="plantList">
+            <!-- Plant items will be dynamically added here -->
+        </ul>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Mock data (replace with actual data from your Java class)
+            const herbalPlantsData = [
+                { name: "Neem", scientificName: "Azadirachta indica", details: "Neem is a tree in the mahogany family Meliaceae." },
+                { name: "Aloe Vera", scientificName: "Aloe barbadensis miller", details: "Aloe Vera is a succulent plant species." },
+                { name: "Tulsi", scientificName: "Ocimum tenuiflorum", details: "Tulsi is an aromatic plant in the family Lamiaceae." }
+                // Add more plant data as needed
+            ];
+
+            // Function to display herbal plants data
+            function displayHerbalPlantsData() {
+                const plantList = document.getElementById("plantList");
+
+                herbalPlantsData.forEach(function(plant) {
+                    const li = document.createElement("li");
+                    li.classList.add("plant-item");
+
+                    const name = document.createElement("div");
+                    name.classList.add("plant-name");
+                    name.textContent = plant.name;
+
+                    const scientificName = document.createElement("div");
+                    scientificName.textContent = "Scientific Name: " + plant.scientificName;
+
+                    const details = document.createElement("div");
+                    details.classList.add("plant-details");
+                    details.textContent = plant.details;
+
+                    li.appendChild(name);
+                    li.appendChild(scientificName);
+                    li.appendChild(details);
+
+                    plantList.appendChild(li);
+                });
+            }
+
+            // Call function to display initial data
+            displayHerbalPlantsData();
+        });
+    </script>
+</body>
+</html>

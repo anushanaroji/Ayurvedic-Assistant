@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnosis Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .diagnosis-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .disease-name {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .primary-symptom {
+            margin-top: 5px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .secondary-symptoms {
+            margin-top: 5px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Diagnosis Data</h2>
+        <div id="diagnosisList">
+            <!-- Diagnosis data will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Mock data (replace with actual data from your Java class)
+            const diagnosisData = [
+                {
+                    disease: "Common Cold",
+                    primarySymptom: "Runny nose",
+                    secondarySymptoms: ["Sneezing", "Cough", "Sore throat"]
+                },
+                {
+                    disease: "Headache",
+                    primarySymptom: "Pain in head",
+                    secondarySymptoms: ["Sensitivity to light", "Nausea"]
+                },
+                {
+                    disease: "Influenza",
+                    primarySymptom: "High fever",
+                    secondarySymptoms: ["Body aches", "Chills", "Fatigue"]
+                }
+                // Add more diagnosis data as needed
+            ];
+
+            // Function to display diagnosis data
+            function displayDiagnosisData() {
+                const diagnosisListContainer = document.getElementById("diagnosisList");
+
+                diagnosisData.forEach(diagnosis => {
+                    const diagnosisItem = document.createElement("div");
+                    diagnosisItem.classList.add("diagnosis-item");
+
+                    const diseaseName = document.createElement("div");
+                    diseaseName.classList.add("disease-name");
+                    diseaseName.textContent = "Disease: " + diagnosis.disease;
+                    diagnosisItem.appendChild(diseaseName);
+
+                    const primarySymptom = document.createElement("div");
+                    primarySymptom.classList.add("primary-symptom");
+                    primarySymptom.textContent = "Primary Symptom: " + diagnosis.primarySymptom;
+                    diagnosisItem.appendChild(primarySymptom);
+
+                    const secondarySymptoms = document.createElement("div");
+                    secondarySymptoms.classList.add("secondary-symptoms");
+                    secondarySymptoms.textContent = "Secondary Symptoms: " + diagnosis.secondarySymptoms.join(", ");
+                    diagnosisItem.appendChild(secondarySymptoms);
+
+                    diagnosisListContainer.appendChild(diagnosisItem);
+                });
+            }
+
+            // Call function to display initial data
+            displayDiagnosisData();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .feedback-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .feedback-item h5 {
+            margin: 0;
+        }
+        .feedback-item p {
+            margin: 0;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="feedbackList" class="list-group"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const feedbacks = [
+                { name: "John Doe", details: "Great app! Very helpful." },
+                { name: "Jane Smith", details: "I found the information I needed easily." },
+                { name: "Sam Wilson", details: "User-friendly and informative." }
+            ];
+
+            function renderFeedbackList() {
+                feedbacks.forEach(feedback => {
+                    const feedbackItem = `
+                        <div class="feedback-item">
+                            <h5>${feedback.name}</h5>
+                            <p>${feedback.details}</p>
+                        </div>
+                    `;
+                    $('#feedbackList').append(feedbackItem);
+                });
+            }
+
+            renderFeedbackList();
+        });
+    </script>
+</body>
+</html>

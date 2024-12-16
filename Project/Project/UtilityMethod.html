@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utility Methods</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+
+        .result span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Utility Methods</h1>
+
+    <form id="utilityForm">
+        <div>
+            <label for="numberInput">Number:</label>
+            <input type="text" id="numberInput" name="number">
+            <button type="button" onclick="validateNumber()">Validate Number</button>
+        </div>
+
+        <div>
+            <label for="decimalInput">Decimal Number:</label>
+            <input type="text" id="decimalInput" name="decimalNumber">
+            <button type="button" onclick="validateDecimalNumber()">Validate Decimal Number</button>
+        </div>
+
+        <div>
+            <label for="emailInput">Email:</label>
+            <input type="email" id="emailInput" name="email">
+            <button type="button" onclick="validateEmail()">Validate Email</button>
+        </div>
+    </form>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        function isNumberValid(number) {
+            const expression = /^[0-9]*$/;
+            return expression.test(number);
+        }
+
+        function isDecimalNumberValid(number) {
+            const expression = /^-?(0|[1-9]\d*)(\.\d+)?$/;
+            return expression.test(number);
+        }
+
+        function isEmailValid(email) {
+            const expression = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return expression.test(email);
+        }
+
+        function validateNumber() {
+            const number = document.getElementById('numberInput').value;
+            const result = isNumberValid(number) ? "Valid" : "Invalid";
+            document.getElementById('result').innerHTML = `<span>Number:</span> ${result}`;
+        }
+
+        function validateDecimalNumber() {
+            const decimalNumber = document.getElementById('decimalInput').value;
+            const result = isDecimalNumberValid(decimalNumber) ? "Valid" : "Invalid";
+            document.getElementById('result').innerHTML = `<span>Decimal Number:</span> ${result}`;
+        }
+
+        function validateEmail() {
+            const email = document.getElementById('emailInput').value;
+            const result = isEmailValid(email) ? "Valid" : "Invalid";
+            document.getElementById('result').innerHTML = `<span>Email:</span> ${result}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Toast</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
+
+        .toast #img {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+
+        .toast #desc {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        .toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+    </style>
+</head>
+<body>
+    <h1>Custom Toast Example</h1>
+    <button onclick="showCustomToast('Title', 'Subtitle', true)">Show Success Toast</button>
+    <button onclick="showCustomToast('Title', 'Subtitle', false)">Show Failure Toast</button>
+
+    <div id="toast" class="toast">
+        <img id="img" src="" alt="icon">
+        <div id="desc">
+            <strong id="toastTitle"></strong><br>
+            <span id="toastSubTitle"></span>
+        </div>
+    </div>
+
+    <script>
+        function showCustomToast(title, subTitle, isSuccess) {
+            const toast = document.getElementById("toast");
+            const toastTitle = document.getElementById("toastTitle");
+            const toastSubTitle = document.getElementById("toastSubTitle");
+            const img = document.getElementById("img");
+
+            toastTitle.textContent = title;
+            toastSubTitle.textContent = subTitle;
+
+            if (isSuccess) {
+                img.src = "tick_mark.png";  // Replace with your tick mark image path
+            } else {
+                img.src = "warning.png";  // Replace with your warning image path
+            }
+
+            toast.className = "toast show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+    </script>
+</body>
+</html>

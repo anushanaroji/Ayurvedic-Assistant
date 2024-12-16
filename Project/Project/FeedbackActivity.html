@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Activity</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+        header {
+            width: 100%;
+            background-color: #6200ea;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #6200ea;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #3700b3;
+        }
+        .hidden {
+            display: none;
+        }
+        .toast {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Feedback</h1>
+</header>
+
+<div id="feedback" class="container">
+    <h2>Feedback Options</h2>
+    <button id="btnViewFeedback">View Feedback</button>
+    <button id="btnSubmitFeedback">Submit Feedback</button>
+</div>
+
+<div id="viewFeedback" class="container hidden">
+    <h2>View Feedback</h2>
+    <p>Here you can view the feedback from users.</p>
+    <button id="backFromViewFeedback">Back</button>
+</div>
+
+<div id="submitFeedback" class="container hidden">
+    <h2>Submit Feedback</h2>
+    <label for="feedbackInput">Your Feedback:</label>
+    <textarea id="feedbackInput" rows="5" style="width:100%;"></textarea>
+    <button id="submitFeedbackButton">Submit</button>
+    <button id="backFromSubmitFeedback">Back</button>
+</div>
+
+<div class="toast" id="toast">Message</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const btnViewFeedback = document.getElementById('btnViewFeedback');
+        const btnSubmitFeedback = document.getElementById('btnSubmitFeedback');
+        const feedbackContainer = document.getElementById('feedback');
+        const viewFeedbackContainer = document.getElementById('viewFeedback');
+        const submitFeedbackContainer = document.getElementById('submitFeedback');
+        const backFromViewFeedback = document.getElementById('backFromViewFeedback');
+        const backFromSubmitFeedback = document.getElementById('backFromSubmitFeedback');
+        const submitFeedbackButton = document.getElementById('submitFeedbackButton');
+        const toast = document.getElementById('toast');
+
+        btnViewFeedback.addEventListener('click', function () {
+            feedbackContainer.classList.add('hidden');
+            viewFeedbackContainer.classList.remove('hidden');
+        });
+
+        btnSubmitFeedback.addEventListener('click', function () {
+            feedbackContainer.classList.add('hidden');
+            submitFeedbackContainer.classList.remove('hidden');
+        });
+
+        backFromViewFeedback.addEventListener('click', function () {
+            viewFeedbackContainer.classList.add('hidden');
+            feedbackContainer.classList.remove('hidden');
+        });
+
+        backFromSubmitFeedback.addEventListener('click', function () {
+            submitFeedbackContainer.classList.add('hidden');
+            feedbackContainer.classList.remove('hidden');
+        });
+
+        submitFeedbackButton.addEventListener('click', function () {
+            const feedbackInput = document.getElementById('feedbackInput').value;
+            if (feedbackInput.trim() === "") {
+                showToast("Feedback cannot be empty");
+            } else {
+                // Simulate saving feedback to a server
+                showToast("Feedback submitted successfully");
+                setTimeout(() => {
+                    submitFeedbackContainer.classList.add('hidden');
+                    feedbackContainer.classList.remove('hidden');
+                    document.getElementById('feedbackInput').value = "";
+                }, 2000);
+            }
+        });
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+    });
+</script>
+
+</body>
+</html>

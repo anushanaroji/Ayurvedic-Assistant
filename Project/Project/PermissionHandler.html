@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permission Handling Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+        }
+
+        .show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Permission Handling Example</h2>
+        <button id="locationPermissionBtn">Request Location Permission</button>
+        <button id="storagePermissionBtn">Request Storage Permission</button>
+        <div id="snackbar" class="snackbar">Permission settings changed. Please refresh.</div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const locationPermissionBtn = document.getElementById("locationPermissionBtn");
+            const storagePermissionBtn = document.getElementById("storagePermissionBtn");
+            const snackbar = document.getElementById("snackbar");
+
+            locationPermissionBtn.addEventListener("click", function() {
+                simulatePermissionCheck("location");
+            });
+
+            storagePermissionBtn.addEventListener("click", function() {
+                simulatePermissionCheck("storage");
+            });
+
+            function simulatePermissionCheck(permissionType) {
+                const permissionGranted = Math.random() < 0.5; // Simulate random permission grant
+
+                if (permissionGranted) {
+                    showSnackbar("Permission granted for " + permissionType);
+                } else {
+                    showPermissionSettingsSnackbar("Permission denied for " + permissionType + ". Change in settings?");
+                }
+            }
+
+            function showPermissionSettingsSnackbar(message) {
+                snackbar.textContent = message;
+                snackbar.classList.add("show");
+                setTimeout(function() {
+                    snackbar.classList.remove("show");
+                }, 3000); // Hide after 3 seconds
+            }
+        });
+    </script>
+</body>
+</html>

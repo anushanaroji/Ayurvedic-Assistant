@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Options Data Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .option-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .details {
+            margin-top: 10px;
+            color: #444;
+        }
+
+        .option-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Options Data Display</h2>
+        <div id="optionList">
+            <!-- Options data will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Mock data (replace with actual data from your Java class)
+            const optionsData = [
+                {
+                    name: "Symptom List",
+                    details: "View a list of symptoms for diagnosis.",
+                    imageId: "symptom-list.jpg" // Replace with actual image path or URL
+                },
+                {
+                    name: "Diagnosis",
+                    details: "Diagnose a disease based on symptoms.",
+                    imageId: "diagnosis.jpg" // Replace with actual image path or URL
+                },
+                {
+                    name: "Prescription Request",
+                    details: "Request prescription based on diagnosis.",
+                    imageId: "prescription.jpg" // Replace with actual image path or URL
+                },
+                {
+                    name: "Herbal Plants",
+                    details: "Explore information about herbal plants.",
+                    imageId: "herbal-plants.jpg" // Replace with actual image path or URL
+                },
+                {
+                    name: "BMI Calculator",
+                    details: "Calculate your Body Mass Index (BMI).",
+                    imageId: "bmi-calculator.jpg" // Replace with actual image path or URL
+                },
+                {
+                    name: "Maps",
+                    details: "View location maps.",
+                    imageId: "maps.jpg" // Replace with actual image path or URL
+                },
+                {
+                    name: "Feedback",
+                    details: "Provide feedback on the application.",
+                    imageId: "feedback.jpg" // Replace with actual image path or URL
+                },
+                {
+                    name: "About App",
+                    details: "Information about the application.",
+                    imageId: "about-app.jpg" // Replace with actual image path or URL
+                },
+                {
+                    name: "About Developer",
+                    details: "Information about the developer.",
+                    imageId: "about-developer.jpg" // Replace with actual image path or URL
+                }
+                // Add more options data as needed
+            ];
+
+            // Function to display options data
+            function displayOptionsData() {
+                const optionListContainer = document.getElementById("optionList");
+
+                optionsData.forEach(option => {
+                    const optionItem = document.createElement("div");
+                    optionItem.classList.add("option-item");
+
+                    const nameElement = document.createElement("div");
+                    nameElement.classList.add("name");
+                    nameElement.textContent = "Name: " + option.name;
+                    optionItem.appendChild(nameElement);
+
+                    const detailsElement = document.createElement("div");
+                    detailsElement.classList.add("details");
+                    detailsElement.textContent = "Details: " + option.details;
+                    optionItem.appendChild(detailsElement);
+
+                    const imageElement = document.createElement("img");
+                    imageElement.classList.add("option-image");
+                    imageElement.src = option.imageId; // Assuming imageId is the path to the image
+                    imageElement.alt = option.name; // Alt text for accessibility
+                    optionItem.appendChild(imageElement);
+
+                    optionListContainer.appendChild(optionItem);
+                });
+            }
+
+            // Call function to display initial data
+            displayOptionsData();
+        });
+    </script>
+</body>
+</html>

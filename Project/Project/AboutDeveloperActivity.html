@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About Developer</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roadmovie', sans-serif;
+        }
+        .toolbar {
+            background-color: #343a40;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .content {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .content h1, .content h2 {
+            font-size: 2em;
+        }
+        .content p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <h1>About Developer</h1>
+    </div>
+    <div class="container content">
+        <h1 id="appName">Ayurvedic Treatment App</h1>
+        <h2 id="optional">Optional Information</h2>
+        <p id="developerName">Developer: John Doe</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function initView() {
+                $('#appName').css('font-family', 'Roadmovie');
+                $('#optional').css('font-family', 'Roadmovie');
+                $('#developerName').css('font-family', 'Roadmovie');
+            }
+
+            initView();
+        });
+    </script>
+</body>
+</html>

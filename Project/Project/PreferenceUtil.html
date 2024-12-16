@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Preferences Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>User Preferences Example</h2>
+        <button id="setUserNameBtn">Set User Name</button>
+        <button id="getUserNameBtn">Get User Name</button>
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const setUserNameBtn = document.getElementById("setUserNameBtn");
+            const getUserNameBtn = document.getElementById("getUserNameBtn");
+            const messageDiv = document.getElementById("message");
+
+            setUserNameBtn.addEventListener("click", function() {
+                const userName = prompt("Enter your username:");
+                if (userName) {
+                    localStorage.setItem("userName", userName);
+                    showMessage("User name set successfully.");
+                }
+            });
+
+            getUserNameBtn.addEventListener("click", function() {
+                const storedUserName = localStorage.getItem("userName");
+                if (storedUserName) {
+                    showMessage("Stored User Name: " + storedUserName);
+                } else {
+                    showMessage("No user name stored.");
+                }
+            });
+
+            function showMessage(message) {
+                messageDiv.textContent = message;
+            }
+        });
+    </script>
+</body>
+</html>

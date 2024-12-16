@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search by Herbal Plants</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        li:hover {
+            background-color: #d0d3d4;
+            transform: translateY(-2px);
+        }
+
+        .plant-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .plant-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .plant-name {
+            font-weight: bold;
+            font-size: 20px;
+            color: #2980b9;
+        }
+
+        .plant-description {
+            margin-top: 8px;
+            font-size: 16px;
+            color: #7f8c8d;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search by Herbal Plants</h1>
+        <ul id="herbalPlantsList"></ul>
+        <a class="back-button" id="btnBack">Back</a>
+    </div>
+
+    <script>
+        // Mock data similar to Android StaticData.getHerbalPlantsDatas()
+        const herbalPlantsData = [
+            { plantName: "Neem", description: "Medicinal tree used for various health benefits.", imageUrl: "images/neem.jpg" },
+            { plantName: "Tulsi", description: "Sacred plant in Hindu culture known for its medicinal properties.", imageUrl: "images/tulasi.jpg" },
+            { plantName: "Aloe Vera", description: "Succulent plant known for its healing properties.", imageUrl: "images/aloe_vera.jpg" },
+            { plantName: "Ginger", description: "Root with anti-inflammatory and digestive properties.", imageUrl: "images/Ginger.jpeg" },
+            { plantName: "Turmeric", description: "Spice with anti-inflammatory and antioxidant properties.", imageUrl: "images/turmeric.jpeg" },
+            { plantName: "Ashwagandha", description: "Ayurvedic herb used for stress relief and vitality.", imageUrl: "images/ashwagandha.jpeg" },
+            { plantName: "Brahmi", description: "Herb known for improving memory and cognitive functions.", imageUrl: "images/brahmi.jpeg" },
+            { plantName: "Guggulu", description: "Resin from a small tree used in Ayurvedic medicine.", imageUrl: "images/guggulu.jpg" }
+        ];
+
+        const plantDetailsData = {
+            "Neem": {
+                scientist: "Dr. Jagadish Chandra Bose",
+                details: "Neem is a fast-growing tree that can reach a height of 15–20 metres.",
+                uses: "Used for skin care, dental care, and as a natural pesticide."
+            },
+            "Tulsi": {
+                scientist: "Dr. Vishnu S. Vyas",
+                details: "Tulsi, also known as Holy Basil, is a perennial plant.",
+                uses: "Used for respiratory disorders, stress relief, and immune system support."
+            },
+            "Aloe Vera": {
+                scientist: "Dr. Shakuntala Bhagat",
+                details: "Aloe Vera is a succulent plant species of the genus Aloe.",
+                uses: "Used for skin treatment, digestive health, and wound healing."
+            },
+            "Ginger": {
+                scientist: "Dr. K. L. Chadha",
+                details: "Ginger is a flowering plant whose rhizome is widely used as a spice.",
+                uses: "Used for nausea relief, anti-inflammatory, and digestive health."
+            },
+            "Turmeric": {
+                scientist: "Dr. Ranjit Singh",
+                details: "Turmeric is a flowering plant of the ginger family, Zingiberaceae.",
+                uses: "Used for anti-inflammatory, antioxidant, and skin care."
+            },
+            "Ashwagandha": {
+                scientist: "Dr. Anand Gupta",
+                details: "Ashwagandha is a medicinal herb native to India and North Africa.",
+                uses: "Used for stress relief, improving fertility, and boosting immunity."
+            },
+            "Brahmi": {
+                scientist: "Dr. Priya Sharma",
+                details: "Brahmi is a creeping herb native to wetlands of India, Nepal, Sri Lanka, China, Taiwan, and Vietnam.",
+                uses: "Used for improving cognitive functions, treating anxiety, and stress relief."
+            },
+            "Guggulu": {
+                scientist: "Dr. Rakesh Kumar",
+                details: "Guggulu is a flowering plant and one of the most important herbal supplements in Ayurveda.",
+                uses: "Used for treating high cholesterol, weight loss, and arthritis."
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const herbalPlantsListElement = document.getElementById('herbalPlantsList');
+
+            herbalPlantsData.forEach(function(plant) {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <img src="${plant.imageUrl}" alt="${plant.plantName}" class="plant-image">
+                    <div class="plant-info">
+                        <div class="plant-name">${plant.plantName}</div>
+                        <div class="plant-description">${plant.description}</div>
+                    </div>
+                `;
+                listItem.addEventListener('click', function() {
+                    const plantInfo = plantDetailsData[plant.plantName];
+                    if (plantInfo) {
+                        const plantDetails = {
+                            ...plantInfo,
+                            plantName: plant.plantName,
+                            imageUrl: plant.imageUrl
+                        };
+                        sessionStorage.setItem('plantDetails', JSON.stringify(plantDetails));
+                        window.location.href = 'HerbalPlantDetailsActivity.html';
+                    }
+                });
+                herbalPlantsListElement.appendChild(listItem);
+            });
+
+            // Add back button functionality
+            const btnBack = document.getElementById('btnBack');
+            btnBack.addEventListener('click', function() {
+                window.history.back();
+            });
+        });
+    </script>
+</body>
+</html>

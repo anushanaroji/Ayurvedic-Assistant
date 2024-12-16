@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splash Screen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .splash-content {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family: 'ROADMOVIE', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="splash-content">
+        <h1 class="title">Ayurvedic Treatment App</h1>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                window.location.href = 'MainActivity.html'; // Replace 'main.html' with your main page URL
+            }, 2000); // Delay in milliseconds (2000ms = 2 seconds)
+        });
+    </script>
+</body>
+</html>

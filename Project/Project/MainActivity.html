@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayurvedic Treatment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .option {
+            width: 900px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .option img {
+            width: 60px;
+            height: 60px;
+            margin-right: 10px;
+        }
+        .option .details {
+            flex: 1;
+        }
+        .option .details h3 {
+            font-size: 18px;
+            margin: 0 0 5px 0;
+        }
+        .option .details p {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+
+        .dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .dialog p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .dialog button {
+            padding: 12px 90px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .dialog button.cancel {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+
+        .dialog button:hover {
+            background-color: #0056b3;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 900;
+        }
+
+        .back-button {
+            display: block;
+            margin: 0 auto 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ayurvedic Treatment</h1>
+        <div class="options" id="optionsContainer">
+            <!-- Options will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Dialog Box -->
+    <div class="overlay" id="overlay"></div>
+    <div class="dialog" id="dialog">
+        <p id="dialogMessage">Are you sure you want to exit now?</p>
+        <button id="btnExit">EXIT</button>
+        <button class="cancel" id="btnCancel">CANCEL</button>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const optionsData = [
+                { name: 'Symptom Checker', details: 'Check symptoms of some common diseases ...', imageId: 'symptom', url: 'SymptomListActivity.html' },
+                { name: 'Diagnosis', details: 'Diagnose using observed symptoms ...', imageId: 'diagnosis', url: 'DiagnosisResultActivity.html' },
+                { name: 'Prescription Request', details: 'Make a prescription request to doctor ...', imageId: 'prescription', url: 'PrescriptionRequestActivity.html' },
+                { name: 'Herbal Plant', details: 'Some herbal plants and diseases descriptions ...', imageId: 'herbal_plant', url: 'HerbalPlantOptionActivity.html' },
+                { name: 'BMI Calculator', details: 'Calculate BMI using weight and height ...', imageId: 'bmi' , url: 'BmiCalculatorActivity.html' },
+                { name: 'Ayurvedic Hospitals', details: 'Check the locations of nearest ayurvedic hospitals ...', imageId: 'maps' },
+                { name: 'Feedback', details: 'Give feedback about the application ...', imageId: 'feedback' },
+                { name: 'About AT App', details: 'Get an idea of AT application ...', imageId: 'about_app' },
+                { name: 'About Developer', details: 'Get an idea of the developer of AT application ...', imageId: 'about_developer' }
+            ];
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            const dialog = document.getElementById('dialog');
+            const overlay = document.getElementById('overlay');
+            const dialogMessage = document.getElementById('dialogMessage');
+            const btnExit = document.getElementById('btnExit');
+            const btnCancel = document.getElementById('btnCancel');
+            const backButton = document.getElementById('backButton');
+
+            optionsData.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.innerHTML = `
+                    <img src="images/${option.imageId}.jpeg" alt="${option.name}">
+                    <div class="details">
+                        <h3>${option.name}</h3>
+                        <p>${option.details}</p>
+                    </div>
+                `;
+                optionElement.addEventListener('click', function() {
+                    if (option.url) {
+                        window.location.href = option.url;
+                    } else {
+                        alert('Implement your logic for ' + option.name); // Replace with actual logic
+                    }
+                });
+                optionsContainer.appendChild(optionElement);
+            });
+
+            backButton.addEventListener('click', function() {
+                window.history.back();
+            });
+
+            window.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && dialog.style.display === 'block') {
+                    closeDialog();
+                }
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === overlay) {
+                    closeDialog();
+                }
+            });
+
+            function closeDialog() {
+                dialog.style.display = 'none';
+                overlay.style.display = 'none';
+            }
+
+            window.onbeforeunload = function() {
+                return true; // For demonstration purpose only
+            };
+
+            window.onunload = function() {
+                alert('Perform necessary cleanup or logging out actions here.'); // For demonstration purpose only
+            };
+
+            window.onpageshow = function(event) {
+                if (event.persisted) {
+                    window.location.reload(); // For handling page reload from browser cache
+                }
+            };
+
+            window.onpagehide = function() {
+                alert('Handle page hiding actions if necessary.'); // For demonstration purpose only
+            };
+
+            window.onpopstate = function(event) {
+                console.log('Location: ' + document.location + ', state: ' + JSON.stringify(event.state));
+            };
+
+            window.ononline = function() {
+                console.log('You are now online.');
+            };
+
+            window.onoffline = function() {
+                alert('You are now offline.');
+            };
+
+            window.onstorage = function(event) {
+                console.log('Storage event: ' + event.key);
+            };
+
+            window.onmessage = function(event) {
+                console.log('Message received from ' + event.origin + ': ' + event.data);
+            };
+
+            window.onerror = function(message, source, lineno, colno, error) {
+                console.error('Error occurred: ' + message);
+            };
+
+            window.onload = function() {
+                console.log('Page loaded.');
+            };
+
+            window.onunload = function() {
+                console.log('Page is being unloaded.');
+            };
+
+            window.onresize = function() {
+                console.log('Window size changed.');
+            };
+
+            window.onscroll = function() {
+                console.log('User scrolled the page.');
+            };
+
+            window.onfocus = function() {
+                console.log('Window focused.');
+            };
+
+            window.onblur = function() {
+                console.log('Window lost focus.');
+            };
+        });
+    </script>
+</body>
+</html>

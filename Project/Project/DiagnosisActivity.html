@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnosis</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .label {
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px 0;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Diagnosis</h1>
+    <div class="label">Primary Symptom</div>
+    <select id="spinnerSymptom1"></select>
+
+    <div class="label">Secondary Symptom 1</div>
+    <select id="spinnerSymptom2" disabled></select>
+
+    <div class="label">Secondary Symptom 2</div>
+    <select id="spinnerSymptom3" disabled></select>
+
+    <div class="label">Secondary Symptom 3</div>
+    <select id="spinnerSymptom4" disabled></select>
+
+    <button id="btnSubmit" class="button">Submit</button>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const primaries = ["Select a symptom"];
+        const symptoms = [
+            {
+                disease: "Appendicitis",
+                primarySymptom: "Lower abdomen pain",
+                secondarySymptoms: [
+                    "Abdomen pain in right side",
+                    "Have vomiting problem",
+                    "Range of fever 100-102",
+                    "Acute pain in lower abdomen",
+                    "The muscles of the right side of the abdomen becomes tense"
+                ]
+            },
+            {
+                disease: "Asthma",
+                primarySymptom: "Gasping of breath",
+                secondarySymptoms: [
+                    "Have coughing problem",
+                    "Have tightness of chest",
+                    "Have vomiting problem",
+                    "Have abdominal pain",
+                    "Bronchial tubes in lungs constricted"
+                ]
+            },
+            {
+                disease: "Diabetes",
+                primarySymptom: "Copious urination",
+                secondarySymptoms: [
+                    "Urine colour is pale",
+                    "Quantity of urine is increased",
+                    "Feels thirsty",
+                    "Decrease weight",
+                    "Anaemia & constipation increases"
+                ]
+            },
+            {
+                disease: "High blood pressure",
+                primarySymptom: "Pain toward the back of the head & neck",
+                secondarySymptoms: [
+                    "Blood pressure level is rise up to 120/70",
+                    "Pain in heart region increased",
+                    "Nervousness, tension and fatigue increased"
+                ]
+            },
+            {
+                disease: "Malaria",
+                primarySymptom: "High fever",
+                secondarySymptoms: [
+                    "Have headache",
+                    "Shivering pain in the limbs",
+                    "Temperature comes down"
+                ]
+            },
+            {
+                disease: "Mumps",
+                primarySymptom: "Swelling and pain",
+                secondarySymptoms: [
+                    "Felt pain in one ear with neck & jaw",
+                    "Have fever",
+                    "Have vomiting problem",
+                    "Have meningitis problem"
+                ]
+            },
+            {
+                disease: "Jaundice",
+                primarySymptom: "Yellow coloration of the eyes",
+                secondarySymptoms: [
+                    "Have weakness",
+                    "Have fever & headache",
+                    "Yellow color of skin & urine",
+                    "Have dull pain in liver region"
+                ]
+            },
+            {
+                disease: "Tuberculosis",
+                primarySymptom: "Persistent cough & hoarseness",
+                secondarySymptoms: [
+                    "Pain in the shoulder",
+                    "Have indigestion",
+                    "Have chest pain",
+                    "Blood in sputum"
+                ]
+            },
+            {
+                disease: "Measles",
+                primarySymptom: "Rashes in skin",
+                secondarySymptoms: [
+                    "Have fever",
+                    "Watering in eyes",
+                    "Dry cough"
+                ]
+            }
+        ];
+
+        symptoms.forEach(symptom => primaries.push(symptom.primarySymptom));
+        
+        const spinnerSymptom1 = document.getElementById("spinnerSymptom1");
+        const spinnerSymptom2 = document.getElementById("spinnerSymptom2");
+        const spinnerSymptom3 = document.getElementById("spinnerSymptom3");
+        const spinnerSymptom4 = document.getElementById("spinnerSymptom4");
+
+        function populateSpinner(spinner, options) {
+            spinner.innerHTML = "";
+            options.forEach(option => {
+                const opt = document.createElement("option");
+                opt.value = option;
+                opt.textContent = option;
+                spinner.appendChild(opt);
+            });
+        }
+
+        function disableSecondaries() {
+            const disabledOptions = ["Disabled now"];
+            populateSpinner(spinnerSymptom2, disabledOptions);
+            populateSpinner(spinnerSymptom3, disabledOptions);
+            populateSpinner(spinnerSymptom4, disabledOptions);
+            spinnerSymptom2.disabled = true;
+            spinnerSymptom3.disabled = true;
+            spinnerSymptom4.disabled = true;
+        }
+
+        function enableSecondaries() {
+            const selectedIndex = spinnerSymptom1.selectedIndex - 1;
+            if (selectedIndex >= 0) {
+                const secondarySymptoms = ["Select a symptom", ...symptoms[selectedIndex].secondarySymptoms];
+                populateSpinner(spinnerSymptom2, secondarySymptoms);
+                populateSpinner(spinnerSymptom3, secondarySymptoms);
+                populateSpinner(spinnerSymptom4, secondarySymptoms);
+                spinnerSymptom2.disabled = false;
+                spinnerSymptom3.disabled = false;
+                spinnerSymptom4.disabled = false;
+            } else {
+                disableSecondaries();
+            }
+        }
+
+        spinnerSymptom1.addEventListener("change", enableSecondaries);
+        document.getElementById("btnSubmit").addEventListener("click", function () {
+            const primaryIndex = spinnerSymptom1.selectedIndex - 1;
+            if (primaryIndex < 0) {
+                alert("Please select some symptoms");
+                return;
+            }
+
+            let count = 0;
+            const selectedSecondaryIndexes = [
+                spinnerSymptom2.selectedIndex,
+                spinnerSymptom3.selectedIndex,
+                spinnerSymptom4.selectedIndex
+            ].filter(index => index > 0);
+
+            count = new Set(selectedSecondaryIndexes).size;
+
+            if (count === 0) {
+                alert("Selected symptoms are not adequate");
+                return;
+            }
+
+            const disease = symptoms[primaryIndex].disease;
+            let resultText = count === 1
+                ? `You may be affected by ${disease}`
+                : `You are affected by ${disease}`;
+
+            alert(resultText);
+        });
+
+        populateSpinner(spinnerSymptom1, primaries);
+        disableSecondaries();
+    });
+</script>
+
+</body>
+</html>

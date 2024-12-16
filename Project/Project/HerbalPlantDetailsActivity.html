@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herbal Plant Details</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .plant-details {
+            text-align: center;
+        }
+
+        .plant-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        .plant-name {
+            font-size: 24px;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+
+        .scientist {
+            font-size: 20px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .details, .uses {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #2980b9;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #1f618d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Herbal Plant Details</h1>
+        <div class="plant-details" id="plantDetails">
+            <!-- Plant details will be dynamically inserted here -->
+        </div>
+        <button class="back-button" id="backButton">Back</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const plantDetailsElement = document.getElementById('plantDetails');
+            const plantDetails = JSON.parse(sessionStorage.getItem('plantDetails'));
+            if (plantDetails) {
+                plantDetailsElement.innerHTML = `
+                    <img src="${plantDetails.imageUrl}" alt="${plantDetails.plantName}" class="plant-image">
+                    <div class="plant-name">${plantDetails.plantName}</div>
+                    <div class="scientist">Scientist: ${plantDetails.scientist}</div>
+                    <div class="details">Details: ${plantDetails.details}</div>
+                    <div class="uses">Uses: ${plantDetails.uses}</div>
+                `;
+            }
+
+            const backButton = document.getElementById('backButton');
+            backButton.addEventListener('click', function() {
+                window.history.back();
+            });
+        });
+    </script>
+</body>
+</html>

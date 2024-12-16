@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spinner Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .custom-select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #selectedItem {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Custom Spinner</h2>
+        <select id="spinner" class="custom-select">
+            <!-- Options will be dynamically added here -->
+        </select>
+        <button onclick="getSelectedItem()">Get Selected Item</button>
+        <div id="selectedItem"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const options = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
+
+            const select = document.getElementById("spinner");
+
+            // Populate the dropdown list
+            options.forEach(function(option) {
+                const optionElement = document.createElement("option");
+                optionElement.textContent = option;
+                select.appendChild(optionElement);
+            });
+
+            // Function to get selected item
+            window.getSelectedItem = function() {
+                const selectedIndex = select.selectedIndex;
+                const selectedItem = options[selectedIndex];
+                const selectedItemDiv = document.getElementById("selectedItem");
+                selectedItemDiv.textContent = `Selected Item: ${selectedItem}`;
+                selectedItemDiv.style.display = "block"; // Show the selected item
+            };
+        });
+    </script>
+</body>
+</html>

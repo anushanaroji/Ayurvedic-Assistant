@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herbal Plants List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .plant-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .plant-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+        .plant-item h5 {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="plantList" class="list-group"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const plants = [
+                { name: "Aloe Vera", imageId: "https://via.placeholder.com/50", scientificName: "Aloe barbadensis", details: "Aloe Vera is used for skin treatment.", uses: "Skin care, burns" },
+                { name: "Basil", imageId: "https://via.placeholder.com/50", scientificName: "Ocimum basilicum", details: "Basil is known for its medicinal properties.", uses: "Cough, cold" },
+                { name: "Chamomile", imageId: "https://via.placeholder.com/50", scientificName: "Matricaria chamomilla", details: "Chamomile is used for its calming effects.", uses: "Anxiety, sleep disorders" }
+            ];
+
+            function renderPlantList() {
+                plants.forEach(plant => {
+                    const plantItem = `
+                        <div class="plant-item" onclick="viewPlantDetails('${plant.name}', '${plant.scientificName}', '${plant.details}', '${plant.uses}', '${plant.imageId}')">
+                            <img src="${plant.imageId}" alt="${plant.name}">
+                            <h5>${plant.name}</h5>
+                        </div>
+                    `;
+                    $('#plantList').append(plantItem);
+                });
+            }
+
+            window.viewPlantDetails = function(name, scientificName, details, uses, imageId) {
+                alert(`Name: ${name}\nScientific Name: ${scientificName}\nDetails: ${details}\nUses: ${uses}`);
+            };
+
+            renderPlantList();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggested Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .plant-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .plant-item img {
+            float: left;
+            margin-right: 10px;
+            border-radius: 8px;
+        }
+
+        .plant-details {
+            margin-top: 10px;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 id="pageTitle"></h2>
+        <div id="plantDetailsContainer"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setAllContentData();
+        });
+
+        function setAllContentData() {
+            var title = getParameterByName('title');
+            var plantPositions = JSON.parse(getParameterByName('position'));
+            var herbalPlantsData = getHerbalPlantsData();
+            var container = document.getElementById('plantDetailsContainer');
+            var pageTitle = document.getElementById('pageTitle');
+            pageTitle.textContent = title;
+
+            plantPositions.forEach(function(position) {
+                var plantData = herbalPlantsData[position];
+                var plantItem = document.createElement('div');
+                plantItem.classList.add('plant-item');
+
+                var img = document.createElement('img');
+                img.src = plantData.imageSrc;
+                img.alt = plantData.name;
+                plantItem.appendChild(img);
+
+                var detailsContainer = document.createElement('div');
+                detailsContainer.classList.add('plant-details');
+
+                var nameLabel = document.createElement('div');
+                nameLabel.classList.add('label');
+                nameLabel.textContent = 'Name:';
+                detailsContainer.appendChild(nameLabel);
+
+                var nameValue = document.createElement('div');
+                nameValue.textContent = plantData.name;
+                detailsContainer.appendChild(nameValue);
+
+                if (plantData.scientificName) {
+                    var scientificLabel = document.createElement('div');
+                    scientificLabel.classList.add('label');
+                    scientificLabel.textContent = 'Scientific Name:';
+                    detailsContainer.appendChild(scientificLabel);
+
+                    var scientificValue = document.createElement('div');
+                    scientificValue.classList.add('italic');
+                    scientificValue.textContent = plantData.scientificName;
+                    detailsContainer.appendChild(scientificValue);
+                }
+
+                var descriptionLabel = document.createElement('div');
+                descriptionLabel.classList.add('label');
+                descriptionLabel.textContent = 'Description:';
+                detailsContainer.appendChild(descriptionLabel);
+
+                var descriptionValue = document.createElement('div');
+                descriptionValue.textContent = plantData.details;
+                detailsContainer.appendChild(descriptionValue);
+
+                var usesLabel = document.createElement('div');
+                usesLabel.classList.add('label');
+                usesLabel.textContent = 'Uses:';
+                detailsContainer.appendChild(usesLabel);
+
+                var usesValue = document.createElement('div');
+                usesValue.textContent = plantData.uses;
+                detailsContainer.appendChild(usesValue);
+
+                plantItem.appendChild(detailsContainer);
+                container.appendChild(plantItem);
+            });
+        }
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        function getHerbalPlantsData() {
+            return [
+                { name: 'Herb 1', scientificName: 'Scientific Herb 1', details: 'Details of Herb 1', uses: 'Uses of Herb 1', imageSrc: 'path_to_image1.jpg' },
+                { name: 'Herb 2', scientificName: '', details: 'Details of Herb 2', uses: 'Uses of Herb 2', imageSrc: 'path_to_image2.jpg' },
+                // Add more plant data as needed
+            ];
+        }
+    </script>
+</body>
+</html>

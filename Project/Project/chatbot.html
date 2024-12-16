@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayurvedic Health Diagnosis Chatbot</title>
+    <style>
+        /* Reset and basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .chat-messages {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+            background-color: #f9f9f9;
+            padding: 10px;
+        }
+
+        .chat-input textarea {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            resize: none;
+            height: 50px;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .chat-input button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 10px;
+            font-size: 1rem;
+        }
+
+        .message {
+            margin: 10px 0;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message .text {
+            background: #f0f0f0;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 70%;
+            word-wrap: break-word;
+            margin: 5px;
+        }
+
+        .message.user .text {
+            background: #4CAF50;
+            color: white;
+            align-self: flex-end;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 600px) {
+            .chat-container {
+                border-radius: 0;
+            }
+            .chat-input button {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">Ayurvedic Health Diagnosis Chatbot</div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input">
+            <textarea id="user-input" placeholder="Type your message here..."></textarea>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const messagesContainer = document.getElementById('chat-messages');
+
+        let currentStage = 'initial';
+        let currentDisease = '';
+        let symptoms = {};
+
+        const diseases = {
+            appendicitis: {
+                primary: 'Lower abdomen pain',
+                secondary: [
+                    'Abdomen pain in right side',
+                    'Vomiting problem',
+                    'Fever (100-102)',
+                    'Acute pain in lower abdomen',
+                    'Tense muscles on the right side of the abdomen'
+                ],
+                tests: 'Ultrasound, Blood test'
+            },
+            asthma: {
+                primary: 'Gasping of breath',
+                secondary: [
+                    'Coughing problem',
+                    'Tightness of chest',
+                    'Vomiting problem',
+                    'Abdominal pain',
+                    'Constricted bronchial tubes in lungs'
+                ],
+                tests: 'Spirometry, Peak flow measurement'
+            },
+            bronchitis: {
+                primary: 'Persistent cough',
+                secondary: [
+                    'Mucus production',
+                    'Shortness of breath',
+                    'Chest discomfort',
+                    'Fatigue',
+                    'Fever (mild)'
+                ],
+                tests: 'Chest X-ray, Sputum culture'
+            },
+            diabetes: {
+                primary: 'Frequent urination',
+                secondary: [
+                    'Increased thirst',
+                    'Unexplained weight loss',
+                    'Fatigue',
+                    'Blurred vision',
+                    'Slow healing sores'
+                ],
+                tests: 'Fasting blood sugar test, HbA1c test'
+            },
+            dysentery: {
+                primary: 'Severe abdominal cramps',
+                secondary: [
+                    'Frequent loose stools with blood',
+                    'Fever (101-102)',
+                    'Nausea or vomiting',
+                    'Dehydration',
+                    'Urgent need to pass stools'
+                ],
+                tests: 'Stool culture, Blood tests'
+            },
+            heart_disease: {
+                primary: 'Chest pain or discomfort',
+                secondary: [
+                    'Shortness of breath',
+                    'Irregular heartbeat',
+                    'Fatigue',
+                    'Swelling in legs, ankles, or feet',
+                    'Dizziness or lightheadedness'
+                ],
+                tests: 'ECG, Echocardiogram, Stress test'
+            },
+            high_blood_pressure: {
+                primary: 'High blood pressure readings',
+                secondary: [
+                    'Headaches',
+                    'Shortness of breath',
+                    'Nosebleeds',
+                    'Fatigue',
+                    'Vision changes'
+                ],
+                tests: 'Blood pressure monitoring, Blood tests'
+            },
+            jaundice: {
+                primary: 'Yellowing of the skin and eyes',
+                secondary: [
+                    'Abdominal pain',
+                    'Dark urine',
+                    'Pale-colored stools',
+                    'Fatigue',
+                    'Itching'
+                ],
+                tests: 'Liver function tests, Bilirubin tests'
+            },
+            malaria: {
+                primary: 'Fever (chills and sweats)',
+                secondary: [
+                    'Headaches',
+                    'Nausea or vomiting',
+                    'Muscle or joint pain',
+                    'Fatigue',
+                    'Diarrhea'
+                ],
+                tests: 'Blood smear test, Rapid diagnostic test (RDT)'
+            },
+            mumps: {
+                primary: 'Swelling and pain in one or both parotid glands',
+                secondary: [
+                    'Fever',
+                    'Headache',
+                    'Muscle aches',
+                    'Loss of appetite',
+                    'Fatigue'
+                ],
+                tests: 'Clinical examination, Blood tests'
+            },
+            kidney_stone: {
+                primary: 'Severe pain in the side and back, below the ribs',
+                secondary: [
+                    'Pain that radiates to the lower abdomen and groin',
+                    'Painful urination',
+                    'Pink, red, or brown urine',
+                    'Cloudy or foul-smelling urine',
+                    'Nausea and vomiting'
+                ],
+                tests: 'CT scan, Urinalysis'
+            },
+            headache: {
+                primary: 'Pain in head',
+                secondary: [
+                    'Pain in head',
+                    'Pain in neck',
+                    'Pain in ears',
+                    'Pain in ears',
+                    'Nausea and vomiting'
+                ],
+                tests: 'Clinical examination'
+            }
+        };
+
+        function sendMessage() {
+            const userInput = document.getElementById('user-input').value.trim().toLowerCase();
+            if (userInput === '') return;
+
+            appendMessage(userInput, 'user');
+            document.getElementById('user-input').value = '';
+
+            setTimeout(() => {
+                const botResponse = getBotResponse(userInput);
+                appendMessage(botResponse, 'bot');
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000);
+        }
+
+        function appendMessage(text, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            const textElement = document.createElement('div');
+            textElement.classList.add('text');
+            textElement.textContent = text;
+            messageElement.appendChild(textElement);
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function getBotResponse(userInput) {
+            if (currentStage === 'initial') {
+                currentStage = 'primary';
+                return 'Hello! How can I assist you with your Ayurvedic health today? Please describe your primary symptom.';
+            }
+
+            if (currentStage === 'primary') {
+                for (let disease in diseases) {
+                    if (userInput.includes(diseases[disease].primary.toLowerCase())) {
+                        currentDisease = disease;
+                        symptoms.primary = diseases[disease].primary;
+                        currentStage = 'secondary1';
+                        return `For ${disease.charAt(0).toUpperCase() + disease.slice(1)}, do you also have any of these symptoms? \n${diseases[disease].secondary.slice(0, 3).join('\n')}`;
+                    }
+                }
+                return 'I\'m sorry, I am still learning. Can you please provide more details?';
+            }
+
+            if (currentStage === 'secondary1') {
+                if (userInput.trim().toLowerCase() === 'no') {
+                    currentStage = 'tests';
+                    return `Based on your primary symptom (${symptoms.primary}), You are affected by ${currentDisease.charAt(0).toUpperCase() + currentDisease.slice(1)}. Suggested tests: ${diseases[currentDisease].tests}.`;
+                } else {
+                    symptoms.secondary1 = userInput;
+                    currentStage = 'secondary2';
+                    return `Additionally, do you experience any of these symptoms?\n${diseases[currentDisease].secondary.slice(3).join('\n')}`;
+                }
+            }
+
+            if (currentStage === 'secondary2') {
+                if (userInput.trim().toLowerCase() === 'no') {
+                    currentStage = 'tests';
+                    return `Based on your symptoms, You are affected by ${currentDisease.charAt(0).toUpperCase() + currentDisease.slice(1)}. Suggested tests: ${diseases[currentDisease].tests}.`;
+                } else {
+                    symptoms.secondary2 = userInput;
+                    currentStage = 'tests';
+                    return `Based on your symptoms, You are affected by ${currentDisease.charAt(0).toUpperCase() + currentDisease.slice(1)}. Suggested tests: ${diseases[currentDisease].tests}.`;
+                }
+            }
+
+            if (currentStage === 'tests') {
+                currentStage = 'initial';
+                return 'Thank you for using our Ayurvedic Health Diagnosis Chatbot. If you have more questions or need further assistance, feel free to ask!';
+            }
+        }
+    </script>
+</body>
+</html>

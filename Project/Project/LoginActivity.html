@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('login.jpeg'); /* Add your background image URL here */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background for the form */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 8px;
+        }
+
+        input, button {
+            padding: 8px;
+            margin-bottom: 12px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" id="btnLogin">Login</button>
+            <button type="button" id="btnRegister">Register</button>
+        </form>
+        <div id="toastMessage" class="toast"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const btnLogin = document.getElementById('btnLogin');
+            const btnRegister = document.getElementById('btnRegister');
+            const toastMessage = document.getElementById('toastMessage');
+
+            // Prefill username and password
+            const prefilledUsername = 'exampleUser';
+            const prefilledPassword = 'examplePassword';
+            usernameInput.value = prefilledUsername;
+            passwordInput.value = prefilledPassword;
+
+            // Automatically submit the form after a short delay
+            setTimeout(function() {
+                handleLogin();
+            }, 500); // Adjust delay as necessary
+
+            btnLogin.addEventListener('click', function(event) {
+                event.preventDefault();
+                handleLogin();
+            });
+
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                handleLogin();
+            });
+
+            btnRegister.addEventListener('click', function() {
+                window.location.href = 'RegisterActivity.html'; // Navigate to registration page
+            });
+
+            function handleLogin() {
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
+
+                if (username === '' || password === '') {
+                    showToast('Username and Password are required');
+                    return;
+                }
+
+                // Simulating API call (replace with actual fetch or AJAX call)
+                setTimeout(function() {
+                    const success = Math.random() < 0.8; // Simulate 80% success rate
+                    if (success) {
+                        const email = 'user@example.com'; // Replace with actual response data
+                        showToast('Login successful');
+                        makeLogin(email);
+                    } else {
+                        showToast('User not found');
+                    }
+                }, 1000); // Simulating delay for API response
+            }
+
+            function makeLogin(email) {
+                // Handle session management or redirection here
+                console.log('Logged in with email:', email);
+                // Redirect to appropriate page based on targetJob
+                const targetJob = localStorage.getItem('target_job'); // Assuming targetJob was stored in localStorage
+                if (targetJob === 'diagnosis') {
+                    window.location.href = 'DiagnosisActivity.html'; // Redirect to diagnosis page
+                } else if (targetJob === 'prescription') {
+                    window.location.href = 'PrescriptionDetailsActivity.html'; // Redirect to prescription page
+                }
+            }
+
+            function showToast(message) {
+                toastMessage.textContent = message;
+                toastMessage.style.display = 'block';
+                setTimeout(function() {
+                    toastMessage.style.display = 'none';
+                }, 3000); // Hide toast after 3 seconds
+            }
+        });
+    </script>
+</body>
+</html>

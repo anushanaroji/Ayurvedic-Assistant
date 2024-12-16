@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayurvedic Treatment</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+        header {
+            width: 100%;
+            background-color: #6200ea;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        select, button, input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #6200ea;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3700b3;
+        }
+        .hidden {
+            display: none;
+        }
+        .toast {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Ayurvedic Treatment</h1>
+</header>
+
+<div id="diagnosis" class="container">
+    <h2>Diagnosis</h2>
+    <label for="symptom1">Primary Symptom</label>
+    <select id="symptom1">
+        <option value="">Select a symptom</option>
+    </select>
+    <label for="symptom2">Secondary Symptom 1</label>
+    <select id="symptom2" disabled>
+        <option value="">Disabled now</option>
+    </select>
+    <label for="symptom3">Secondary Symptom 2</label>
+    <select id="symptom3" disabled>
+        <option value="">Disabled now</option>
+    </select>
+    <label for="symptom4">Secondary Symptom 3</label>
+    <select id="symptom4" disabled>
+        <option value="">Disabled now</option>
+    </select>
+    <button id="submit">Submit</button>
+</div>
+
+<div id="result" class="container hidden">
+    <h2>Diagnosis Result</h2>
+    <p id="disease"></p>
+    <button id="back">Back</button>
+</div>
+
+<div class="toast" id="toast">Message</div>
+
+<script>
+    const symptoms = [
+        {
+            disease: "Appendicitis",
+            primary: "Lower abdomen pain",
+            secondary: [
+                "Abdomen pain in right side",
+                "Have vomiting problem",
+                "Range of fever 100-102",
+                "Acute pain in lower abdomen",
+                "The muscles of the right side of the abdomen becomes tense"
+            ]
+        },
+        {
+            disease: "Asthma",
+            primary: "Gasping of breath",
+            secondary: [
+                "Have coughing problem",
+                "Have tightness of chest",
+                "Have vomiting problem",
+                "Have abdominal pain",
+                "Bronchial tubes in lungs constricted"
+            ]
+        },
+        {
+            disease: "Diabetes",
+            primary: "Frequent urination",
+            secondary: [
+                "Increased thirst",
+                "Unexplained weight loss",
+                "Extreme hunger",
+                "Fatigue",
+                "Blurred vision"
+            ]
+        },
+        {
+            disease: "Hypertension",
+            primary: "High blood pressure",
+            secondary: [
+                "Headaches",
+                "Shortness of breath",
+                "Nosebleeds",
+                "Flushing",
+                "Dizziness",
+                "Chest pain"
+            ]
+        },
+        {
+            disease: "Migraine",
+            primary: "Severe headache",
+            secondary: [
+                "Nausea",
+                "Sensitivity to light",
+                "Sensitivity to sound",
+                "Vomiting",
+                "Blurred vision",
+                "Aura before headache"
+            ]
+        },
+        // Add more diseases in a similar format if needed
+    ];
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const primarySelect = document.getElementById('symptom1');
+        const secondarySelects = [
+            document.getElementById('symptom2'),
+            document.getElementById('symptom3'),
+            document.getElementById('symptom4')
+        ];
+        const submitBtn = document.getElementById('submit');
+        const resultContainer = document.getElementById('result');
+        const diagnosisContainer = document.getElementById('diagnosis');
+        const diseaseText = document.getElementById('disease');
+        const backBtn = document.getElementById('back');
+        const toast = document.getElementById('toast');
+
+        symptoms.forEach((symptom, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = symptom.primary;
+            primarySelect.appendChild(option);
+        });
+
+        primarySelect.addEventListener('change', function () {
+            if (primarySelect.value === "") {
+                secondarySelects.forEach(select => {
+                    select.disabled = true;
+                    select.innerHTML = '<option value="">Disabled now</option>';
+                });
+            } else {
+                const selectedIndex = primarySelect.value;
+                const secondaryOptions = symptoms[selectedIndex].secondary;
+                secondarySelects.forEach(select => {
+                    select.disabled = false;
+                    select.innerHTML = '<option value="">Select a symptom</option>';
+                    secondaryOptions.forEach(optionText => {
+                        const option = document.createElement('option');
+                        option.textContent = optionText;
+                        select.appendChild(option);
+                    });
+                });
+            }
+        });
+
+        submitBtn.addEventListener('click', function () {
+            if (primarySelect.value === "") {
+                showToast("Please select some symptoms");
+            } else {
+                const selectedIndex = primarySelect.value;
+                const selectedSymptom = symptoms[selectedIndex];
+                let selectedSecondaries = 0;
+                const selectedValues = [];
+                secondarySelects.forEach(select => {
+                    if (select.value !== "") {
+                        selectedSecondaries++;
+                        selectedValues.push(select.value);
+                    }
+                });
+
+                if (selectedSecondaries === 0) {
+                    showToast("Selected symptoms are not adequate");
+                } else {
+                    const diagnosisText = selectedSecondaries === 1
+                        ? `You may be affected by ${selectedSymptom.disease}`
+                        : `You are affected by ${selectedSymptom.disease}`;
+                    diseaseText.textContent = diagnosisText;
+                    diagnosisContainer.classList.add('hidden');
+                    resultContainer.classList.remove('hidden');
+                }
+            }
+        });
+
+        backBtn.addEventListener('click', function() {
+            diagnosisContainer.classList.remove('hidden');
+            resultContainer.classList.add('hidden');
+            primarySelect.value = "";
+            secondarySelects.forEach(select => {
+                select.disabled = true;
+                select.innerHTML = '<option value="">Disabled now</option>';
+            });
+        });
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+    });
+</script>
+</body>
+</html>

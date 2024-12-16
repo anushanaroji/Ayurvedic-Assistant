@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Diet Suggestions</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .label {
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .suggestions {
+            margin-top: 10px;
+            white-space: pre-wrap; /* Ensures new lines are respected */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Diet Suggestions</h1>
+    <div class="label">Do:</div>
+    <div id="doSuggestions" class="suggestions"></div>
+    <div class="label">Do Not:</div>
+    <div id="doNotSuggestions" class="suggestions"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const bmiCase = parseInt(localStorage.getItem('bmi_case')) || 2;
+
+        const suggestions = {
+            1: {
+                do: `>> Eat more often\n\n>> Drink Milk\n\n>> Try Weight gainer shakes\n\n>> Use Bigger Plates\n\n>> Add cream to your coffee\n\n>> Take Creatine\n\n>> Get Quality Sleep\n\n>> Eat your protein first and vegetables last`,
+                doNot: `>> Drink water before meals\n\n>> Smoke`
+            },
+            2: {
+                do: `>> Eat whole grain cereals\n\n>> Include salad with meals\n\n>> Eat fruits in between main meals\n\n>> Include fresh Garlic and Ginger for gravy\n\n>> Drink at least 8 glass water\n\n>> Do regular exercise`,
+                doNot: `>> More oil for the food preparation\n\n>> Fast foods\n\n>> Sweets, pastries and baked foods\n\n>> Meat and meat products\n\n>> Alcohol and alcoholic beverages`
+            },
+            3: {
+                do: `>> Eat regular meals\n\n>> Eat plenty of fruit and vegetables\n\n>> Drink a ton of water\n\n>> Eat high-fiber foods\n\n>> Use a smaller plate\n\n>> Control emotional eating\n\n>> Cut down on sugar and refined carbs`,
+                doNot: `>> Don't skip breakfast\n\n>> Don't ban foods\n\n>> Don't stock junk food\n\n>> Don't drink a ton of alcohol\n\n>> Don't starve yourself\n\n>> Don't deprive yourself of indulgences`
+            },
+            4: {
+                do: `>> Seek advice from a dietitian for weight management\n\n>> Focus on nutrient-dense foods\n\n>> Monitor portion sizes\n\n>> Engage in regular physical activity\n\n>> Stay hydrated with water\n\n>> Aim for balanced meals with lean protein, whole grains, and vegetables`,
+                doNot: `>> Avoid crash diets\n\n>> Limit processed foods\n\n>> Reduce consumption of sugary beverages\n\n>> Minimize sedentary activities\n\n>> Avoid excessive intake of high-fat foods`
+            }
+        };
+
+        document.getElementById('doSuggestions').textContent = suggestions[bmiCase].do;
+        document.getElementById('doNotSuggestions').textContent = suggestions[bmiCase].doNot;
+    });
+</script>
+
+</body>
+</html>

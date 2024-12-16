@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Feedback</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        .toolbar {
+            background-color: #343a40;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .message {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .feedback-list {
+            margin-top: 20px;
+        }
+        .feedback-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <h1>Feedbacks</h1>
+    </div>
+    <div class="container">
+        <div id="message" class="message"></div>
+        <div id="feedbackCount" class="text-center font-weight-bold"></div>
+        <div id="feedbackList" class="feedback-list"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function fetchFeedback() {
+                var feedbackData = [
+                    { username: "John Doe", comment: "Great service!" },
+                    { username: "Jane Smith", comment: "Very helpful, thank you." }
+                ]; // This would be replaced with the actual API call
+
+                displayFeedback(feedbackData);
+            }
+
+            function displayFeedback(data) {
+                if (data.length > 0) {
+                    $('#feedbackCount').text(data.length + ' feedback(s) found');
+                    var feedbackHtml = '';
+                    $.each(data, function(index, feedback) {
+                        feedbackHtml += '<div class="feedback-item">';
+                        feedbackHtml += '<h5>' + feedback.username + '</h5>';
+                        feedbackHtml += '<p>' + feedback.comment + '</p>';
+                        feedbackHtml += '</div>';
+                    });
+                    $('#feedbackList').html(feedbackHtml);
+                    $('#message').hide();
+                } else {
+                    $('#feedbackCount').text('');
+                    $('#feedbackList').html('');
+                    $('#message').text('No feedback found').show();
+                }
+            }
+
+            fetchFeedback();
+        });
+    </script>
+</body>
+</html>

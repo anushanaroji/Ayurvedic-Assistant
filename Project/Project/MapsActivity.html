@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayurvedic Hospitals</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #map {
+            height: 400px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ayurvedic Hospitals</h1>
+        <div id="map"></div>
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const PLACES_API_KEY = 'YOUR_PLACES_API_KEY';
+            let map;
+            let allLats = null;
+            let allLons = null;
+            let markersAdded = false;
+
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 0, lng: 0},
+                    zoom: 14
+                });
+                getLocation();
+            }
+
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const myLat = position.coords.latitude;
+                        const myLon = position.coords.longitude;
+                        const myLocName = "Your Location";
+
+                        const placeURL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${myLat},${myLon}&radius=5000&types=hospital&key=${PLACES_API_KEY}`;
+
+                        fetch(placeURL)
+                            .then(response => response.json())
+                            .then(data => {
+                                const places = data.results;
+                                const bounds = new google.maps.LatLngBounds();
+
+                                places.forEach(place => {
+                                    const lat = place.geometry.location.lat;
+                                    const lng = place.geometry.location.lng;
+                                    const name = place.name;
+
+                                    new google.maps.Marker({
+                                        position: {lat, lng},
+                                        map: map,
+                                        title: name,
+                                        icon: {
+                                            url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                                        }
+                                    });
+
+                                    bounds.extend({lat, lng});
+                                });
+
+                                new google.maps.Marker({
+                                    position: {lat: myLat, lng: myLon},
+                                    map: map,
+                                    title: 'You are here',
+                                    icon: {
+                                        url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                                    }
+                                });
+
+                                map.fitBounds(bounds);
+                                document.getElementById('progressBar').style.display = 'none';
+                            })
+                            .catch(error => {
+                                console.error('Error fetching data:', error);
+                                alert('Failed to fetch nearby places.');
+                            });
+                    }, function(error) {
+                        console.error('Error getting geolocation:', error);
+                        alert('Error getting your location.');
+                    });
+                } else {
+                    alert('Geolocation is not supported by this browser.');
+                }
+            }
+
+            initMap();
+        });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_PLACES_API_KEY&callback=initMap" async defer></script>
+</body>
+</html>

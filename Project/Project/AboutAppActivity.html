@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About AT App</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roadmovie', sans-serif;
+        }
+        .toolbar {
+            background-color: #343a40;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .content {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .content h1 {
+            font-size: 2em;
+        }
+        .content p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <h1>About AT App</h1>
+    </div>
+    <div class="container content">
+        <h1 id="appName">Ayurvedic Treatment App</h1>
+        <p id="appDesc">This application provides users with information on Ayurvedic treatments for various ailments. It aims to help users explore alternative medicine and holistic approaches to health and wellness.</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function initView() {
+                $('#appName').css('font-family', 'Roadmovie');
+                $('#appDesc').css('font-family', 'Roadmovie');
+            }
+
+            initView();
+        });
+    </script>
+</body>
+</html>
